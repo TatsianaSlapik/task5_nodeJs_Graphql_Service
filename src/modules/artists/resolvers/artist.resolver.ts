@@ -11,6 +11,17 @@ const artistResolvers = {
           return data;
         });
     },
+    artists: (obj, args, context, info) => {
+      return fetch(
+        `http://localhost:3002/v1/artists?limit=${args.limit}&offset=${args.offset}`
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          return data.items;
+        });
+    },
   },
 };
 export default artistResolvers;

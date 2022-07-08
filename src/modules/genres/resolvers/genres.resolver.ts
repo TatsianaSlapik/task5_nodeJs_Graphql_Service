@@ -11,6 +11,17 @@ const genresResolvers = {
           return data;
         });
     },
+    genres: (obj, args, context, info) => {
+      return fetch(
+        `http://localhost:3001/v1/genres?limit=${args.limit}&offset=${args.offset}`
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          return data.items;
+        });
+    },
   },
 };
 export default genresResolvers;
