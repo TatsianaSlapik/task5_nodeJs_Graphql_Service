@@ -14,3 +14,20 @@ type Query {
   artist(id: ID!): Artist
   artists(limit: Int, offset: Int): [Artist]
 }
+
+input NewArtistInput {
+  firstName: String
+  secondName: String
+  middleName: String
+  birthDate: String
+  birthPlace: String
+  country: String
+  bandsIds: [ID]
+  instruments: [String]
+}
+
+type Mutation {
+  createArtist(newArtist: NewArtistInput): Artist
+  updateArtist(id: ID!, newArtist: NewArtistInput): Artist
+  deleteArtist(id: ID!): [Artist]
+}

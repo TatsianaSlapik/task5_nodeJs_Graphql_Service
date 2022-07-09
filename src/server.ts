@@ -9,6 +9,7 @@ import artistResolvers from "./modules/artists/resolvers/artist.resolver";
 import bandsResolvers from "./modules/bands/resolvers/bands.resolver";
 import genresResolvers from "./modules/genres/resolvers/genres.resolver";
 import tracksResolvers from "./modules/tracks/resolvers/tracks.resolver";
+import favouritesResolvers from "./modules/favourites/resolvers/favourites.resolver";
 
 const schema = makeExecutableSchema({
   typeDefs: loadSchemaSync("./**/*.graphql", {
@@ -21,6 +22,7 @@ const schema = makeExecutableSchema({
     bandsResolvers,
     tracksResolvers,
     genresResolvers,
+    favouritesResolvers,
   ],
 });
 
@@ -28,9 +30,14 @@ const schema = makeExecutableSchema({
 var app = express();
 app.use(
   "/graphql",
-  graphqlHTTP({
-    schema: schema,
-    graphiql: true,
+  graphqlHTTP((req, res, graphQLParams) => {
+    return {
+      schema: schema,
+      graphiql: true,
+      context: {
+        req: req,
+      },
+    };
   })
 );
 app.listen(4000, () =>
